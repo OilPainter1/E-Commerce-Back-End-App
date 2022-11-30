@@ -2,6 +2,7 @@ const router = require('express').Router();
 const sequelize = require('sequelize');
 const { Tag, Product, ProductTag } = require('../../models');
 
+
 // The `/api/tags` endpoint
 
 router.get('/', async (req, res) => {
@@ -11,9 +12,10 @@ router.get('/', async (req, res) => {
   
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   // find a single tag by its `id`
   // be sure to include its associated Product data
+  res.json(await Tag.findByPk(req.params.id))
 });
 
 router.post('/', async (req, res) => {

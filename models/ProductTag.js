@@ -13,6 +13,7 @@ ProductTag.init(
         model: "Product",
         key: "id"
       }
+    
 
     },
     tag_id: {

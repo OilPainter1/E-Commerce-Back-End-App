@@ -9,6 +9,7 @@ router.get('/',async (req, res) => {
   const allCategories = await Category.findAll({
     include: Product
   })
+
   res.json(allCategories)
 });
 
