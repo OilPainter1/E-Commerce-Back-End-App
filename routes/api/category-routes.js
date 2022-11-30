@@ -29,7 +29,16 @@ router.get('/:id',async (req, res) => {
   }
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
+  console.log(req.body)
+  try {
+  const newCategory = await Category.create({category_name: req.body.category_name})
+  console.log("Category added")
+  res.json(newCategory)
+  }
+  catch(err){
+    res.status(400).send("Could not create new category")
+  }
   // create a new category
 });
 
@@ -37,7 +46,25 @@ router.put('/:id', (req, res) => {
   // update a category by its `id` value
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id',async (req, res) => {
+  try {
+    const deletedCategory = await Category.findAll({
+      where: {
+        id: req.params.id
+      }
+    })
+    
+    await Category.destroy({
+      where: {
+        id: req.params.id
+      }
+    })
+    res.json(deletedCategory)
+    console.log(`Category with id: ${req.params.id} deleted`)
+  }
+  catch (err){
+    res.status(400).send(`Category with id: ${req.params.id} not deleted`)
+  }
   // delete a category by its `id` value
 });
 
